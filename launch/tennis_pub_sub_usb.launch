@@ -1,0 +1,7 @@
+  <launch>
+    <!-- Tennis ball publisher-->
+    <node pkg="ros_essentials_cpp" type="tennis_ball_usb_cam_tracker.py" name="tennis_ball_usb_cam_tracker"/>
+    <!-- Tennis ball subscriber-->
+    <node pkg="ros_essentials_cpp" type="tennis_ball_listener.py" name="tennis_ball_listener"/>
+
+  </launch>

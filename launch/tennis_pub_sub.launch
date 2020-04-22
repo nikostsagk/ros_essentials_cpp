@@ -1,0 +1,7 @@
+  <launch>
+    <!-- Tennis ball publisher-->
+    <node pkg="ros_essentials_cpp" type="tennis_ball_publisher.py" name="tennis_ball_publisher"/>
+    <!-- Tennis ball subscriber-->
+    <node pkg="ros_essentials_cpp" type="tennis_ball_listener.py" name="tennis_ball_listener"/>
+
+  </launch>

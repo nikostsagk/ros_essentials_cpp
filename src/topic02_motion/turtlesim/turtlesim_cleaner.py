@@ -167,7 +167,7 @@ def gridClean():
     move(2.0, 9.0, True)
     rotate(degrees2radians(30), degrees2radians(90), True)
     move(2.0, 1.0, True)
-    rotate(degrees2radians(30), degrees2radians(90), True)
+    rotate(degrees2radians(30), degrees2radians(90), False)
     move(2.0, 9.0, True)
     pass
  
@@ -210,8 +210,9 @@ if __name__ == '__main__':
 
         #move(1.0, 2.0, False)
         #rotate(30, 90, True)
-        go_to_goal(1.0, 1.0)
+        #go_to_goal(1.0, 1.0)
         #setDesiredOrientation(math.radians(90))
+        spiralClean()
        
     except rospy.ROSInterruptException:
         rospy.loginfo("node terminated.")

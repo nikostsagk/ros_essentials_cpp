@@ -33,28 +33,33 @@ def move(speed, distance):
             y0=y
             #z0=z;
             #yaw0=yaw;
+
+            #task 1. assign the x coordinate of linear velocity to the speed. 
             velocity_message.linear.x =speed
             distance_moved = 0.0
             loop_rate = rospy.Rate(10) # we publish the velocity at 10 Hz (10 times a second)    
-            cmd_vel_topic='/cmd_vel'
+            cmd_vel_topic='/turtle1/cmd_vel'
+            #task 2. create a publisher for the velocity message on the appropriate topic.
             velocity_publisher = rospy.Publisher(cmd_vel_topic, Twist, queue_size=10)
 
-            while True :
-                    rospy.loginfo("Turtlesim moves forwards")
+            while not rospy.is_shutdown():
+                    rospy.loginfo('Turtlesim moves forwards')
+                    #task 3. publish the velocity message 
                     velocity_publisher.publish(velocity_message)
 
                     loop_rate.sleep()
-                    
+
                     #rospy.Duration(1.0)
-                    
+
                     distance_moved = distance_moved+abs(0.5 * math.sqrt(((x-x0) ** 2) + ((y-y0) ** 2)))
-                    print  distance_moved               
+                    print(distance_moved)
                     if  not (distance_moved<distance):
-                        rospy.loginfo("reached")
+                        rospy.loginfo('reached')
                         break
             
             #finally, stop the robot when the distance is moved
-            velocity_message.linear.x =0
+            #task 4. publish a velocity message zero to make the robot stop after the distance is reached
+            velocity_message.linear.x = 0
             velocity_publisher.publish(velocity_message)
     
 
@@ -65,20 +70,21 @@ if __name__ == '__main__':
         rospy.init_node('turtlesim_motion_pose', anonymous=True)
 
         #declare velocity publisher
-        cmd_vel_topic='/cmd_vel'
+        #task 5. declare velocity publisher
+        cmd_vel_topic='/turtle1/cmd_vel'
         velocity_publisher = rospy.Publisher(cmd_vel_topic, Twist, queue_size=10)
         
-        position_topic = "/turtle1/pose"
+        position_topic = '/turtle1/pose'
         pose_subscriber = rospy.Subscriber(position_topic, Pose, poseCallback) 
         time.sleep(2)
-        print 'move: '
-        move (1.0, 5.0)
+        print('move: ')
+        move(1.0, 5.0)
         time.sleep(2)
-        print 'start reset: '
+        print('start reset: ')
         rospy.wait_for_service('reset')
         reset_turtle = rospy.ServiceProxy('reset', Empty)
         reset_turtle()
-        print 'end reset: '
+        print('end reset: ')
         rospy.spin()
        
     except rospy.ROSInterruptException:
